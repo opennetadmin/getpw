@@ -1,0 +1,52 @@
+# 
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!IMPORTANT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#
+# BE CAREFUL not to let this password file be owned by the incorrect
+# group/user.
+#
+# Remember that this file should only be readable by the people executing
+# 'getpw' and processes that run 'getpw'.
+#
+# These passwords will only be as secure as the filesystem and permissions
+# that it is using.  This is much like the old /etc/password file in this
+# regard except that it will most likly be owned by something other than root.
+#
+# !!!!!!!!!!!!!!!!!!!!!!!!!!!!IMPORTANT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+#
+# This file defines IP ranges and the password types that are valid for those
+# ranges.  The file is processed from top to bottom and will stop on the first
+# match it finds.
+# 
+# Each section is defined by an ip/mask statement surounded by square brackets.
+# You can specify a single host using its IP and a mask of 255.255.255.255.
+#
+# Example:
+#     [10.0.0.0/255.0.0.0]
+#
+# Within the section you can define any password type and then its
+# resulting password values.  The type and the password values are seperated
+# by '=>'.  Each password value is seperated by a comma.  It is intended that
+# the passwords listed for each type are listed from newest to oldest.  This
+# allows other scripts to loop through the result and try each password in 
+# order until one works.
+#
+# Example:
+#     enable=>new-password1,old-password2,oldest-password3
+#
+
+[1.1.1.0/255.255.255.0]
+enable=>one,two,three
+snmpro=>a,b,c
+
+# This is a complex mask example
+[10.192.0.1/255.192.252.255]
+enable=>1,2,3
+
+# This finds things in 10. range
+[10.0.0.0/255.0.0.0]
+enable=>pass1,pass2,pass3
+
+##### This is the default section covering all subnets ######
+# If something doesn't match above then it will use what is listed here
+[0.0.0.0/0.0.0.0]
+enable=>pas1,pas2,pas3
