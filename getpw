@@ -39,7 +39,6 @@
 ##############################################################################
 ## 
 ## Description
-## Subversion info: $Id: getpw 14 2008-10-08 21:55:26Z mdp $
 ## 
 ##  getpw is a utility for looking up passwords based on a type and an IP
 ##  address range for the host itself
@@ -48,19 +47,20 @@
 ##  
 ##  Changelog:
 ##      
+##      10/27/2015 - v1.02 - Matt Pascoe
+##          - fix qw as parentheses and remove use Switch
 ##      1/2/2007 - v1.00 - Matt Pascoe
 ##          - Initial
 ##      
 ##      
 ##############################################################################
 use strict;
-use Switch;
 use IO::Socket;
 
 ## Load Time::HiRes if it's available
 eval { require Time::HiRes; };
 unless ($@) {
-    Time::HiRes->import qw(time);
+    Time::HiRes->import (qw(time));
 }
 
 # Get the value of /etc/onabase
@@ -81,7 +81,7 @@ $onabase =~ s/\s+//;
 our %conf = (
     
     ## Program details
-    'version'              => '1.01',                          ## The version of this program
+    'version'              => '1.02',                          ## The version of this program
     'authorName'           => 'Matt Pascoe',                   ## Author's Name
     'authorEmail'          => 'matt@opennetadmin.com',         ## Author's Email Address
     'passwordFile'         => $onabase.'/etc/getpw.conf',      ## Set the default password file location.  Use -f to change on commandline
@@ -154,7 +154,7 @@ if ($conf{'hostname'} eq 'localhost') {
         ## Try the hostname module
         eval { require Sys::Hostname; };
         unless ($@) {
-            Sys::Hostname->import qw(hostname);
+            Sys::Hostname->import (qw(hostname));
             $conf{'hostname'} = lc(hostname());
         }
     }
